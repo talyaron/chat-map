@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 const user = {
     name: '🌟 Alice Johnson 🌟',
@@ -12,16 +12,18 @@ const user = {
 
 const Profile = () => {
     return (
-        <View style={styles.container}>
-            <Image
-                source={{ uri: user.profilePicture }}
-                style={styles.profilePicture}
-            />
-            <Text style={styles.name}>{user.name}</Text>
-            <Text style={styles.email}>{user.email}</Text>
-            <Text style={styles.email}>{user.icons}</Text>
-            <Text style={styles.bio}>{user.bio}</Text>
-        </View>
+        <ScrollView>
+            <View style={styles.container}>
+                <Image
+                    source={{ uri: user.profilePicture }}
+                    style={styles.profilePicture}
+                />
+                <Text style={styles.name}>{user.name}</Text>
+                <Text style={styles.email}>{user.email}</Text>
+                <Text style={styles.bio}>{user.icons}</Text>
+                <Text style={styles.bio}>{user.bio}</Text>
+            </View>
+        </ScrollView>
     );
 };
 
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        gap: 10,
+        gap: 20,
         padding: 20,
         // justifyContent: 'space-around',
     },
