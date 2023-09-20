@@ -7,7 +7,6 @@ import * as Location from 'expo-location';
 import ChatBubble from '../../components/ChatBubble';
 import { mapThemes } from '../../constants/mapThemes';
 import { useNavigation } from 'expo-router';
-import { chatBubblesMC } from '../../MockupDatabase/chatBubbles';
 import { NavigationProp } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useChatBubbles from '../../store/useChatBubbles';
