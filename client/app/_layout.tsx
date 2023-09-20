@@ -12,6 +12,11 @@ export default function RootLayout() {
             <Stack.Screen name="(modal)/menu" options={{
               presentation: 'modal',
               title: 'Menu',
+            }}/>
+            <Stack.Screen name="(modal)/newChat"
+            options={{
+              presentation: 'modal',
+              title: '',
               
             }}/>
             <Stack.Screen

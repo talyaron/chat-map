@@ -24,7 +24,7 @@ const ChatBubble = ({
                 <Text>{chatMembers}</Text>
             </View>
             <TouchableOpacity style={styles.button} onPress={() => console.log(id)}>
-                <Text>Join</Text>
+                <Text>Enter</Text>
             </TouchableOpacity>
         </View>
     );
@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         backgroundColor: "#fff",
-        shadowColor: "#000",
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
         borderColor: "lightblue",
         borderWidth: 1,
         gap: 8,

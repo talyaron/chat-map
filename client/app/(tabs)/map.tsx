@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect } from 'react'
 import MapView, { Callout } from 'react-native-maps'
 import {Marker} from 'react-native-maps';
@@ -6,58 +6,32 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import ChatBubble from '../../components/ChatBubble';
 import { mapThemes } from '../../constants/mapThemes';
+import { useNavigation } from 'expo-router';
+import { chatBubblesMC } from '../../MockupDatabase/chatBubbles';
+import { NavigationProp } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useChatBubbles from '../../store/useChatBubbles';
+import useLocation from '../../store/useLocation';
 
 export interface markerLocation {
   latitude: number,
   longitude: number,
 }
 
-export const chatBubbles = [
-  {
-    id:"d23nd23-32f23f-gf2g334gh34",
-    chatName: "Chat 1",
-    chatDesciption: "Some short description",
-    chatMembers: 1,
-    chatLocation: {
-      latitude: 37.42242102482837,
-      longitude: -122.08366960287096,
-    }
-  },
-  {
-    id:"d23nd23-32f23f-gf2g334gh342",
-    chatName: "Chat 2",
-    chatDesciption: "Some long description that is very long and will be cut off at some point bsdkjfs djfb skdjbfk jsdbnfi nbsodifn osdinf osndfo insdofi nsdoifn oisdnf oisdnf oisdnf oisnoif jnwefh  0wenfow ifbnowie bn",
-    chatMembers: 2,
-    chatLocation: {
-      latitude: 37.42148721520545,
-      longitude: -122.0847438275814,
-    }
-  },
-  {
-    id:"d23nd23-32f23f-gf2g334gh3423",
-    chatName: "Chat 3",
-    chatDesciption: "",
-    chatMembers: 2,
-    chatLocation: {
-      latitude: 37.42426704192054,
-      longitude: -122.08431534469126,
-    }
-  },
-  {
-    id:"d23nd23-32f23f-gf2g334gh34234",
-    chatName: "Chat 4",
-    chatDesciption: "Medium length description for this chat bubble",
-    chatMembers: 2,
-    chatLocation: {
-      latitude: 37.423136751266604,
-      longitude: -122.08569433540106,
-    }
-  },
-]
+export interface chatBubble {
+  id: string,
+  chatName: string,
+  chatDesciption: string,
+  chatMembers: number,
+  chatLocation: markerLocation
+}
+
 
 const map = () => {
-  const [selectedChat, setSelectedChat] = React.useState("")
+  // Map Theme
   const [ isLightTheme, setIsLightTheme ] = React.useState(true)
+
+  // Map User Location
   const [location, setLocation] = React.useState({
     latitude: 37.42182298327982,
     longitude: -122.0831123739481,
@@ -65,12 +39,24 @@ const map = () => {
     longitudeDelta: 0.0034
   })
 
+  // React Native Navigator
+  const navigation = useNavigation<NavigationProp<any>>()
+
+  // Zustand states
+  const { chatBubbles } = useChatBubbles()
+  const { markerLocation } = useLocation()
+  const { setMarkerLocation } = useLocation()
+
+  // User Permissions
+  const [ locationPermission, setLocationPermission ] = React.useState(false)
+
   const userLocation = async () => {
     const {status} = await Location.requestForegroundPermissionsAsync()
     if(status !== "granted"){
       console.log("Permission to access location was denied")
       return
     }
+    setLocationPermission(true)
     const location = await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.High})
     const {latitude, longitude} = location.coords
     setLocation({
@@ -79,49 +65,55 @@ const map = () => {
       latitudeDelta: 0.0043,
       longitudeDelta: 0.0034
     })
+    setMarkerLocation({
+      latitude: latitude,
+      longitude: longitude,
+    })
+
   }
 
   useEffect(()=>{
     userLocation()
   },[])
 
-  const [markerLocation, setMarkerLocation] = React.useState<markerLocation>({
-    latitude: 32.290966028093486,
-    longitude: 34.84692592173815,
-  })
-
-
   return (
     <View style={styles.container}>
-      <View>
-          <TouchableOpacity style={{zIndex:1,position:"absolute", top:14, left:20, backgroundColor:isLightTheme?"black":"white", borderRadius:10, padding:8}} onPress={()=>setIsLightTheme(!isLightTheme)}>
-            <Ionicons name={isLightTheme?"moon":"ios-sunny"} size={24} color={isLightTheme?"white":"black"} />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={{zIndex:1,position:"absolute", top:72, left:20, backgroundColor:isLightTheme?"black":"white", borderRadius:10, padding:8}} onPress={()=>setIsLightTheme(!isLightTheme)}>
+          <Ionicons name={isLightTheme?"moon":"ios-sunny"} size={24} color={isLightTheme?"white":"black"} />
+        </TouchableOpacity>
+        <TouchableOpacity style={{zIndex:1,position:"absolute", bottom:72, left:20, backgroundColor:isLightTheme?"black":"white", borderRadius:10, padding:8}} onPress={()=>{
+          if(locationPermission){
+            navigation.navigate("(modal)/newChat", {markerLocation:markerLocation})
+          } else {
+            Alert.alert("Location Permission", "Please allow location permission in your phone settings to create a new chat bubble", [{text:"Ok"}], {cancelable:true})
+          }
+        }}>
+          <MaterialCommunityIcons name="chat-plus" size={24} color={isLightTheme?"white":"black"} />
+        </TouchableOpacity>
       <MapView
       style={styles.map}
       showsUserLocation={true}
-      region={location}
+      initialRegion={location}
       showsMyLocationButton={true}
+      provider='google'
+      toolbarEnabled={false}
       maxZoomLevel={20}
-      onPress={(e)=>{
-        console.log(e.nativeEvent.coordinate)
-        setMarkerLocation(e.nativeEvent.coordinate)
-        }
-      }
       customMapStyle={isLightTheme?mapThemes.light:mapThemes.dark}
+      onPress={(e)=>{
+        setMarkerLocation(e.nativeEvent.coordinate)
+      }}
       >
         <Marker
         coordinate={markerLocation}
         draggable={true}
-        tracksViewChanges={false}
+        onDragEnd={(e)=>setMarkerLocation(e.nativeEvent.coordinate)}
+        title='Your Chat Location'
+        description='Your new chat bubble will be created here'
         >
-          <View >
             <Ionicons name="ios-location-sharp" size={42} color="red" />
-          </View>
         </Marker>
 
-        {chatBubbles.map((chatBubble)=>{
+        {chatBubbles.map((chatBubble:chatBubble)=>{
           return(
             <Marker
             key={chatBubble.id}
@@ -129,19 +121,16 @@ const map = () => {
             description={chatBubble.chatDesciption}
             coordinate={chatBubble.chatLocation}
             draggable={false}
-            onSelect={(e)=>{
-              setSelectedChat(chatBubble.id)
-              }
-            }
-            onDeselect={(e)=>{
-              setSelectedChat("")
-              }
-            }
+            id={chatBubble.id}
             >
-              <Image source={require("../../assets/bubbles/bubble_chat1_shadow2_110x110.png")} style={{width:selectedChat === chatBubble.id?86:110, height:selectedChat === chatBubble.id?86:110}}/>
+              <Image source={require("../../assets/bubbles/bubble_chat1_shadow2_110x110.png")} style={{width:110, height:110}}/>
               <Callout 
               tooltip
               style={styles.calloutBubble}
+              onPress={() => {
+                console.log(chatBubble.id)
+                navigation.navigate("chats", {id:chatBubble.id})
+              }}
               
               >
                 <ChatBubble {...chatBubble}/>
@@ -166,12 +155,5 @@ const styles = StyleSheet.create({
       flex:1,
   },
   calloutBubble:{
-    shadowColor:"#000",
-    shadowOffset:{
-        width:0,
-        height:6,
-    },
-    shadowOpacity:0.5,
-    shadowRadius:4,
   }
 })
