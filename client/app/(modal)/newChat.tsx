@@ -155,5 +155,13 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 8,
         alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
 });
