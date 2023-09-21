@@ -12,6 +12,11 @@ export interface markerLocation {
     longitude: number;
 }
 
+export interface customBubble {
+    id: string;
+    uri: any;
+}
+
 const newChat = () => {
     const { markerLocation } = useLocation();
     const [ charCount, setCharCount ] = React.useState(0);
@@ -21,7 +26,7 @@ const newChat = () => {
         chatDesciption: "",
         chatMembers: 1,
         chatLocation: markerLocation,
-        customBubbleImage: "",
+        customBubbleImage: customBubblesChat.bubble1.uri,
     });
     const navigation = useNavigation<NavigationProp<any>>();
 
@@ -79,7 +84,7 @@ const newChat = () => {
             <View style={styles.customBubblesContainer}>
                 <Text style={styles.customBubbleHeader}>Custom Bubbles</Text>
                 <ScrollView horizontal contentContainerStyle={styles.customBubbleScrollview}  showsHorizontalScrollIndicator={false}>
-                    {customBubbleImages.map((customBubble) => {
+                    {customBubbleImages.map((customBubble:customBubble) => {
                         return (
                             <TouchableOpacity
                                 key={customBubble.id}
@@ -87,7 +92,7 @@ const newChat = () => {
                                 onPress={() => {
                                     setChatDetails({
                                         ...chatDetails,
-                                        customBubbleImage: customBubble.uri,
+                                        customBubbleImage: customBubblesChat[customBubble.id].uri,
                                     });
                                     setCustomBubbleImage(customBubble.id)
                                 }}
