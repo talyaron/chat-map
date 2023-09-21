@@ -90,7 +90,7 @@ const newChat = ({ route }: any) => {
             </View>
             <View style={{height:120, alignItems:"center"}}>
                 <Text style={{ fontSize: 20 }}>Custom Bubbles</Text>
-                <ScrollView horizontal contentContainerStyle={{height:120, gap:10}} style={{height:100}} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal contentContainerStyle={{height:120, gap:10, paddingHorizontal:14}} style={{height:100}} showsHorizontalScrollIndicator={false}>
                     {customBubbleImages.map((customBubble) => {
                         return (
                             <TouchableOpacity
