@@ -14,6 +14,6 @@ export default notifications
 const styles = StyleSheet.create({
     safeArea: {
         flex:1,
-        paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+40:0,
+        paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+20:0,
     },
 })

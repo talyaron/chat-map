@@ -149,7 +149,7 @@ export default map
 const styles = StyleSheet.create({
   container: {
       flex:1,
-      paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+40:0,
+      paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+20:0,
   },
   map: {
       flex:1,
