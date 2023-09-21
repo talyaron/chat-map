@@ -22,7 +22,8 @@ export interface chatBubble {
   chatName: string,
   chatDesciption: string,
   chatMembers: number,
-  chatLocation: markerLocation
+  chatLocation: markerLocation,
+  customBubbleImage: any,
 }
 
 
@@ -122,7 +123,7 @@ const map = () => {
             draggable={false}
             id={chatBubble.id}
             >
-              <Image source={require("../../assets/bubbles/bubble_chat1_shadow2_110x110.png")} style={{width:110, height:110}}/>
+              <Image source={chatBubble.customBubbleImage} style={{width:110, height:110}}/>
               <Callout 
               tooltip
               style={styles.calloutBubble}
@@ -148,7 +149,7 @@ export default map
 const styles = StyleSheet.create({
   container: {
       flex:1,
-      paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+20:0,
+      paddingTop:StatusBar.currentHeight?StatusBar.currentHeight+40:0,
   },
   map: {
       flex:1,

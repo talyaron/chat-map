@@ -11,7 +11,8 @@ export interface chatBubble {
   chatName: string,
   chatDesciption: string,
   chatMembers: number,
-  chatLocation: markerLocation
+  chatLocation: markerLocation,
+  customBubbleImage: any,
 }
 
 export interface chatBubbles {
