@@ -5,7 +5,7 @@ import { useNavigation } from "expo-router";
 import { NavigationProp, useRoute } from "@react-navigation/native";
 import useChatBubbles from "../../store/useChatBubbles";
 import useLocation from "../../store/useLocation";
-import { customBubbleImages } from "../../constants/customChatBubbles";
+import { customBubbleImages, customBubblesChat } from "../../constants/customChatBubbles";
 
 export interface markerLocation {
     latitude: number;
@@ -88,9 +88,9 @@ const newChat = ({ route }: any) => {
                     {charCount}/100
                 </Text>
             </View>
-            <View style={{height:100, alignItems:"center"}}>
+            <View style={{height:120, alignItems:"center"}}>
                 <Text style={{ fontSize: 20 }}>Custom Bubbles</Text>
-                <ScrollView horizontal contentContainerStyle={{height:100, gap:10}} style={{height:100}} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal contentContainerStyle={{height:120, gap:10}} style={{height:100}} showsHorizontalScrollIndicator={false}>
                     {customBubbleImages.map((customBubble) => {
                         return (
                             <TouchableOpacity
@@ -109,10 +109,11 @@ const newChat = ({ route }: any) => {
                                         alignContent: "center",
                                         margin: 4,
                                         borderRadius: 20,
-                                        backgroundColor: customBubble.id === customBubbleImage ? "lightblue" : "rgba(0,0,0,0)",
+                                        borderWidth: 2,
+                                        borderColor: customBubble.id === customBubbleImage ? "lightblue" : "rgba(0,0,0,0)",
                                     }}
                                 >
-                                    <Image source={customBubble.uri} style={{ width: 60, height: 60 }} />
+                                    <Image source={customBubble.uri} style={{ width: 80, height: 80, borderRadius:20 }} />
                                 </View>
                             </TouchableOpacity>
                         );
