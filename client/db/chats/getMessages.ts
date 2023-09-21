@@ -2,7 +2,7 @@ import { collection, limit, onSnapshot, orderBy, query, where } from "firebase/f
 import { DB } from "../config";
 import { MessageSchema } from "@/models/chats/messageModel";
 
-export function listenToMessages(chatId: string) {
+export function listenToMessages(chatId: string, cb:Function) {
     try {
         if(!chatId) throw new Error("chatId is required");
 
@@ -14,8 +14,10 @@ export function listenToMessages(chatId: string) {
                     MessageSchema.parse(messageDB.data())
                     console.log(messageDB.data());
                     // add to store (Zustand)
+                    //cb(messageDB.data())
 
-                    
+                    // cb -> setMessages((message) => setMessage(message)) //state
+
                 } catch (error) {
                     console.error(error)
                 }
