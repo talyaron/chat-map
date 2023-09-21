@@ -92,7 +92,7 @@ const newChat = () => {
                                 onPress={() => {
                                     setChatDetails({
                                         ...chatDetails,
-                                        customBubbleImage: customBubblesChat[customBubble.id].uri,
+                                        customBubbleImage: customBubble.id in customBubblesChat? customBubblesChat[customBubble.id].uri:customBubblesChat.bubble1.uri,
                                     });
                                     setCustomBubbleImage(customBubble.id)
                                 }}
