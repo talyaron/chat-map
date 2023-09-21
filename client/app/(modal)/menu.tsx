@@ -1,15 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationProp } from "@react-navigation/native";
 
 const menu = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
+
+  
   return (
     <View>
       <Text>menu</Text>
       <Text>Logout</Text>
-      <TouchableOpacity>
-        <Link href="/login">Login</Link>
+      <TouchableOpacity onPress={()=>navigation.navigate('login')}>
+        <Text>Login</Text>
       </TouchableOpacity>
     </View>
   );
