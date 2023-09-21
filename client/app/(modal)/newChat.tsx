@@ -12,13 +12,7 @@ export interface markerLocation {
     longitude: number;
 }
 
-const customBubbles = [
-    {
-
-    }
-]
-
-const newChat = ({ route }: any) => {
+const newChat = () => {
     const { markerLocation } = useLocation();
     const [ charCount, setCharCount ] = React.useState(0);
     const [ customBubbleImage, setCustomBubbleImage ] = React.useState(customBubbleImages[0].id)
@@ -39,6 +33,7 @@ const newChat = ({ route }: any) => {
         addChatBubble([...chatBubbles, { ...chatDetails, id: Math.random().toString() }]);
         navigation.navigate("map");
     };
+
     return (
         <View
             style={styles.container}
@@ -47,7 +42,7 @@ const newChat = ({ route }: any) => {
                 Keyboard.dismiss();
             }}
         >
-            <Text style={{ fontSize: 20 }}>New Chat</Text>
+            <Text style={styles.header}>New Chat</Text>
             <TextInput
                 style={styles.textInput}
                 maxLength={24}
@@ -77,25 +72,18 @@ const newChat = ({ route }: any) => {
                         });
                     }}
                 />
-                <Text
-                    style={{
-                        position: "absolute",
-                        right: 10,
-                        bottom: 10,
-                        color: "lightgray",
-                    }}
-                >
+                <Text style={styles.charsCount}>
                     {charCount}/100
                 </Text>
             </View>
-            <View style={{height:120, alignItems:"center"}}>
-                <Text style={{ fontSize: 20 }}>Custom Bubbles</Text>
-                <ScrollView horizontal contentContainerStyle={{height:120, gap:10, paddingHorizontal:14}} style={{height:100}} showsHorizontalScrollIndicator={false}>
+            <View style={styles.customBubblesContainer}>
+                <Text style={styles.customBubbleHeader}>Custom Bubbles</Text>
+                <ScrollView horizontal contentContainerStyle={styles.customBubbleScrollview}  showsHorizontalScrollIndicator={false}>
                     {customBubbleImages.map((customBubble) => {
                         return (
                             <TouchableOpacity
                                 key={customBubble.id}
-                                style={{borderRadius: 20,}}
+                                style={styles.customBubbleBtn}
                                 onPress={() => {
                                     setChatDetails({
                                         ...chatDetails,
@@ -104,24 +92,14 @@ const newChat = ({ route }: any) => {
                                     setCustomBubbleImage(customBubble.id)
                                 }}
                             >
-                                <View
-                                    style={{
-                                        alignContent: "center",
-                                        margin: 4,
-                                        borderRadius: 20,
-                                        borderWidth: 2,
-                                        borderColor: customBubble.id === customBubbleImage ? "lightblue" : "rgba(0,0,0,0)",
-                                    }}
-                                >
-                                    <Image source={customBubble.uri} style={{ width: 80, height: 80, borderRadius:20 }} />
-                                </View>
+                                    <Image source={customBubble.uri} style={[styles.bubbleImage ,{borderColor: customBubble.id === customBubbleImage ? "lightblue" : "rgba(0,0,0,0)" }]} />
                             </TouchableOpacity>
                         );
                     })}
                 </ScrollView>
             </View>
-            <TouchableOpacity style={styles.button} onPress={createChat}>
-                <Text style={{ fontSize: 20, color: "#000" }}>Create Chat</Text>
+            <TouchableOpacity style={styles.createChatBtn} onPress={createChat}>
+                <Text style={styles.createChatText}>Create Chat</Text>
             </TouchableOpacity>
         </View>
     );
@@ -135,6 +113,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 40,
         gap: 20,
+    },
+    header: {
+        fontSize: 20,
     },
     textInput: {
         backgroundColor: "white",
@@ -151,7 +132,34 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
-    button: {
+    charsCount: {
+        position: "absolute",
+        right: 10,
+        bottom: 10,
+        color: "lightgray",
+    },
+    customBubblesContainer: {
+        height:120,
+        alignItems:"center"
+    },
+    customBubbleHeader: {
+        fontSize: 20
+    },
+    customBubbleScrollview: {
+        height:120,
+        gap:10,
+        paddingHorizontal:14
+    },
+    customBubbleBtn: {
+        borderRadius: 20
+    },
+    bubbleImage: {
+        width: 80,
+        height: 80,
+        borderRadius:20,
+        borderWidth:2,
+    },
+    createChatBtn: {
         backgroundColor: "lightblue",
         padding: 8,
         borderRadius: 8,
@@ -164,5 +172,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    createChatText: {
+        fontSize: 20,
+        color: "#000"
     },
 });
