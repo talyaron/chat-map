@@ -20,13 +20,6 @@ export default function RootLayout() {
               
             }}/>
             <Stack.Screen
-                name='(modal)/menu'
-                options={{
-                    presentation: 'modal',
-                    title: 'Menu',
-                }}
-            />
-            <Stack.Screen
                 name='login'
                 options={{
                     headerShown: false,
