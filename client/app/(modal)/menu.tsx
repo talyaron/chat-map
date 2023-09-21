@@ -15,6 +15,9 @@ const menu = () => {
       <TouchableOpacity onPress={()=>navigation.navigate('login')}>
         <Text>Login</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('about')}>
+        <Text>about</Text>
+      </TouchableOpacity>
     </View>
   );
 };

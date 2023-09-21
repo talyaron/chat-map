@@ -26,7 +26,7 @@ export default function RootLayout() {
                 }}
             />
             <Stack.Screen
-                name='register'
+                name='about'
                 options={{
                     headerShown: false,
                 }}
