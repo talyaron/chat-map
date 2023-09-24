@@ -1,13 +1,12 @@
 import { Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
 import Colors from '../../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
-import CustomHeader from "../../components/CustomHeader";
+import CustomHeader from '../../components/CustomHeader';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
   return (
     <Tabs
