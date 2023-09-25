@@ -1,96 +1,65 @@
-import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    FlatList,
-    StyleSheet,
-    StatusBar,
-} from 'react-native';
+import React from 'react';
 
-const ChatComponent = () => {
-    const [messages, setMessages] = useState([{ text: '', user: '' }]);
-    const [newMessage, setNewMessage] = useState('');
+// react native
+import { View, StyleSheet, StatusBar, Text } from 'react-native';
 
-    const handleSendMessage = () => {
-        if (newMessage.trim() !== '') {
-            const updatedMessages = [
-                ...messages,
-                { text: newMessage, user: 'You' },
-            ];
-            setMessages(updatedMessages);
-            setNewMessage('');
-        }
-    };
+// expo
+import { Link } from 'expo-router';
+
+// zustand store
+import useChats from '@/store/useChats';
+
+export default function chats() {
+    const { chats } = useChats();
+
+    const orderedChats = chats.sort((a, b) => {
+        return a.createdAt.getTime() - b.createdAt.getTime();
+    });
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={messages}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.messageContainer}>
-                        <Text style={styles.messageText}>
-                            {item.user}: {item.text}
-                        </Text>
-                    </View>
-                )}
-            />
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Type a message...'
-                    value={newMessage}
-                    onChangeText={(text) => setNewMessage(text)}
-                />
-                <TouchableOpacity
-                    style={styles.sendButton}
-                    onPress={handleSendMessage}
-                >
-                    <Text style={styles.sendButtonText}>Send</Text>
-                </TouchableOpacity>
-            </View>
+            <Text style={styles.title}>ChatList</Text>
+            {orderedChats.map((chat, index) => {
+                return (
+                    <Link
+                        style={styles.link}
+                        key={index}
+                        href={{
+                            pathname: '/chat',
+                            // /* 1. Navigate to the details route with query params */
+                            params: {
+                                id: chat.id,
+                                title: chat.title,
+                            },
+                        }}
+                    >
+                        {chat.title}
+                    </Link>
+                );
+            })}
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        gap: 20,
+        alignItems: 'center',
         padding: 16,
         marginTop: StatusBar.currentHeight ? StatusBar.currentHeight + 36 : 0,
     },
-    messageContainer: {
-        marginBottom: 8,
+    title: {
+        fontSize: 50,
+        fontFamily: 'Roboto',
     },
-    messageText: {
-        fontSize: 16,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderTopWidth: 1,
-        borderColor: '#ccc',
-        paddingVertical: 8,
-    },
-    input: {
-        flex: 1,
-        paddingHorizontal: 8,
-        fontSize: 16,
-    },
-    sendButton: {
-        backgroundColor: 'blue',
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderRadius: 4,
-        marginLeft: 8,
-    },
-    sendButtonText: {
-        color: 'white',
-        fontSize: 16,
+    link: {
+        backgroundColor: '#5d36fc',
+        color: '#fff',
+        fontSize: 20,
         fontWeight: 'bold',
+        paddingVertical: 20,
+        width: '60%',
+        textAlign: 'center',
     },
 });
-
-export default ChatComponent;
