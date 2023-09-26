@@ -31,8 +31,6 @@ const About = () => {
     <View style={styles.box}>
       <ImageBackground source={imageBackground} style={styles.imageBackground}>
         <ScrollView style={styles.container}>
-          <Text style={styles.title}>About us:</Text>
-
           {teamDevelopers.map((developer) => (
             <View key={developer.id} style={styles.listItem}>
               <View style={styles.checkboxContainer}>
@@ -44,7 +42,6 @@ const About = () => {
                 <Image style={styles.image} source={{ uri: developer.image }} />
                 <Text style={styles.text}>{developer.name}</Text>
               </View>
-
               {expandedDevelopers === developer.id && (
                 <View style={styles.subList}>
                   <Text style={styles.role}>{developer.role}</Text>
@@ -124,10 +121,6 @@ const styles = StyleSheet.create({
     color: "red",
     backgroundColor: "black",
   },
-  title:{
-    fontSize: 50,
-    color: "white"
-  }
 });
 
 export default About;

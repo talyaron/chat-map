@@ -34,9 +34,6 @@ const Menu = () => {
         <Ionicons name="log-out" size={20} color="white" />
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>navigation.navigate('about')}>
-        <Text>about</Text>
-      </TouchableOpacity>
     </View>
   );
 };
