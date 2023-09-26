@@ -42,9 +42,9 @@ const newChat = () => {
     return (
         <View
             style={styles.container}
-            onTouchEnd={() => {
+            onTouchCancel={() => {
                 // Hide the keyboard
-                Keyboard.dismiss();
+                // Keyboard.dismiss();
             }}
         >
             <Text style={styles.header}>New Chat</Text>
@@ -55,6 +55,8 @@ const newChat = () => {
                 onChangeText={(text) => {
                     setChatDetails({ ...chatDetails, chatName: text });
                 }}
+                placeholderTextColor={"gray"}
+                
             />
             <View>
                 <TextInput
@@ -64,8 +66,10 @@ const newChat = () => {
                             height: 100,
                             textAlignVertical: "top",
                             flexWrap: "wrap",
+                            zIndex:2
                         },
                     ]}
+                    placeholderTextColor={"gray"}
                     multiline
                     maxLength={100}
                     placeholder="Chat Description"
@@ -92,7 +96,7 @@ const newChat = () => {
                                 onPress={() => {
                                     setChatDetails({
                                         ...chatDetails,
-                                        customBubbleImage: customBubblesChat[customBubble.id].uri,
+                                        customBubbleImage: customBubble.id in customBubblesChat? customBubblesChat[customBubble.id].uri:customBubblesChat.bubble1.uri,
                                     });
                                     setCustomBubbleImage(customBubble.id)
                                 }}
@@ -118,6 +122,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 40,
         gap: 20,
+        zIndex:0
     },
     header: {
         fontSize: 20,

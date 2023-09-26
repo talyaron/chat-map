@@ -18,15 +18,7 @@ export default function TabLayout() {
         options={{
           title: 'Chats',
           header: () => <CustomHeader />,
-          tabBarIcon: ({ color, focused }) => <Ionicons name={focused?"chatbubble-ellipses":"chatbubble-ellipses-outline"} size={24} color={color} style={{color:focused?"lightblue":color}}/>,
-        }}
-      />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          title: 'Notifications',
-          header: () => <CustomHeader />,
-          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused?"bell":"bell-outline"} size={24} color={color} style={{color:focused?"lightblue":color}}/>,
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused?"chatbubble-ellipses":"chatbubble-ellipses-outline"} size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
         }}
       />
       <Tabs.Screen
@@ -34,7 +26,15 @@ export default function TabLayout() {
         options={{
           title: 'Map',
           header: () => <CustomHeader />,
-          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="google-maps" size={24} color={color} style={{color:focused?"lightblue":color}}/>,
+          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="google-maps" size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          title: 'Notifications',
+          header: () => <CustomHeader />,
+          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused?"bell":"bell-outline"} size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
         }}
       />
     </Tabs>
