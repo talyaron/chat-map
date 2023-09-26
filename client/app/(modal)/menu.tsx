@@ -10,27 +10,27 @@ const Menu = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Menu</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('profile')}>
         <Ionicons name="person" size={20} color="white" />
         <Text style={styles.buttonText}>Profile</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Policy')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('policy')}>
         <Ionicons name="document-text" size={20} color="white" />
         <Text style={styles.buttonText}>Policy</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('About')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('about')}>
         <Ionicons name="information-circle" size={20} color="white" />
         <Text style={styles.buttonText}>About</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('login')}>
         <Ionicons name="log-in" size={20} color="white" />
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Logout')}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('logout')}>
         <Ionicons name="log-out" size={20} color="white" />
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
@@ -43,12 +43,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0, 
-    height: '100%', 
+    height: '100%',
     width: '50%',
     backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 10,
+    justifyContent: 'flex-start', 
 },
   title: {
     fontSize: 24,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 10, 
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', 
+    justifyContent: 'center', 
     padding: 10,
     borderRadius: 2,
   },
