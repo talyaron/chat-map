@@ -31,7 +31,7 @@ const About = () => {
     <View style={styles.box}>
       <ImageBackground source={imageBackground} style={styles.imageBackground}>
         <ScrollView style={styles.container}>
-          <Text style={styles.title}>About as:</Text>
+          <Text style={styles.title}>About us:</Text>
 
           {teamDevelopers.map((developer) => (
             <View key={developer.id} style={styles.listItem}>
