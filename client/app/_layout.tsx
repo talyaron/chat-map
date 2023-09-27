@@ -1,10 +1,10 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
 export default function RootLayout() {
     return (
         <Stack>
             <Stack.Screen
-                name="(tabs)"
+                name='(tabs)'
                 options={{
                     headerShown: false,
                 }}
@@ -12,16 +12,21 @@ export default function RootLayout() {
             <Stack.Screen name="(modal)/menu" options={{
               presentation: 'modal',
               title: 'Menu',
+            }}/>
+            <Stack.Screen name="(modal)/newChat"
+            options={{
+              presentation: 'modal',
+              title: '',
               
             }}/>
             <Stack.Screen
-                name="login"
+                name='login'
                 options={{
                     headerShown: false,
                 }}
             />
             <Stack.Screen
-                name="register"
+                name='register'
                 options={{
                     headerShown: false,
                 }}

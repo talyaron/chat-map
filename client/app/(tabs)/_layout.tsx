@@ -1,13 +1,12 @@
 import { Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
 import Colors from '../../constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
-import CustomHeader from "../../components/CustomHeader";
+import CustomHeader from '../../components/CustomHeader';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
   return (
     <Tabs
@@ -19,15 +18,7 @@ export default function TabLayout() {
         options={{
           title: 'Chats',
           header: () => <CustomHeader />,
-          tabBarIcon: ({ color }) => <Ionicons name="chatbubble-ellipses-outline" size={24} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="notifications"
-        options={{
-          title: 'Notifications',
-          header: () => <CustomHeader />,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="bell-outline" size={24} color={color} />,
+          tabBarIcon: ({ color, focused }) => <Ionicons name={focused?"chatbubble-ellipses":"chatbubble-ellipses-outline"} size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
         }}
       />
       <Tabs.Screen
@@ -35,7 +26,15 @@ export default function TabLayout() {
         options={{
           title: 'Map',
           header: () => <CustomHeader />,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="google-maps" size={24} color={color} />,
+          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name="google-maps" size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
+        }}
+      />
+      <Tabs.Screen
+        name="notifications"
+        options={{
+          title: 'Notifications',
+          header: () => <CustomHeader />,
+          tabBarIcon: ({ color, focused }) => <MaterialCommunityIcons name={focused?"bell":"bell-outline"} size={focused?32:24} color={color} style={{color:focused?"lightblue":color}}/>,
         }}
       />
     </Tabs>
