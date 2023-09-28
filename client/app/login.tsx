@@ -1,11 +1,29 @@
-import React from 'react';
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import * as google from "expo-auth-session/providers/google"
+import * as WebBrowser from "expo-web-browser"
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { auth } from "../db/config"
 
 
-const login = () => {
+WebBrowser.maybeCompleteAuthSession();
+
+const LoginScreen = () => {
+  const [userInfo, setUserInfo] = useState();
+  const [request, response, promptAsyn] = google.useAuthRequest({
+    clientId: "1071674898442-nefh20p4c3rpumque22d6pd3e4bjltvg.apps.googleusercontent.com"
+  });
+
+  useEffect(() => {
+if(response?.type == "success"){
+  const { id_token } = response.params;
+  const credential = GoogleAuthProvider.credential(id_token);
+  signInWithCredential(auth, credential)
+}
+  },[response])
+
   return (
     <View style={styles.container}>
-      
       <Text style={styles.title}>Location Chat</Text>
       <TextInput
         style={styles.input}
@@ -18,10 +36,8 @@ const login = () => {
         placeholderTextColor="#777"
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-      <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      <Button title="Login with Google" onPress={() => promptAsyn()}/>
+      {/* Add additional UI components or navigation here */}
     </View>
   );
 };
@@ -29,45 +45,22 @@ const login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 40,
-    borderColor: '#777',
     borderWidth: 1,
+    borderColor: "#777",
     borderRadius: 5,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
     marginBottom: 10,
-  },
-  loginButton: {
-    backgroundColor: '#007AFF', // Your theme color
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    marginBottom: 10,
-  },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  forgotPassword: {
-    color: '#007AFF', // Your theme color
-    fontSize: 16,
   },
 });
 
-export default login;
+export default LoginScreen;
