@@ -1,4 +1,4 @@
-# chat-map was build by the development team of the following devlopers
+# chat-map was built by the following developer Team:
 
 * Nikita Rossenko - Map, new chat, icons, and navigation.
 * Vladislav Biknov - Profile Page
